@@ -4,18 +4,25 @@ import observe.Notification;
 import observe.Observer;
 import visit.Visitor;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public abstract class AbstractDepartment implements Department {
 
     private final long id;
-    private List<Customer> customers;
-    private List<Item> items;
+    private Set<Customer> customers;
+    private Set<Item> items;
+    private Set<Observer> observers;
 
     private static long nextDepId;
 
     {
         id = nextDepId++;
+        customers = new TreeSet<>();
+        items = new TreeSet<>();
+        observers = new TreeSet<>();
     }
 
     @Override
@@ -29,7 +36,7 @@ public abstract class AbstractDepartment implements Department {
     }
 
     @Override
-    public List<Customer> getCustomers() {
+    public Set<Customer> getCustomers() {
         return customers;
     }
 
@@ -45,23 +52,25 @@ public abstract class AbstractDepartment implements Department {
     }
 
     @Override
-    public List<Item> getItems() {
+    public Set<Item> getItems() {
         return items;
     }
 
     @Override
     public void addObserver(Observer observer) {
-
+        observers.add(observer);
     }
 
     @Override
     public void removeObserver(Observer observer) {
-
+        observers.remove(observer);
     }
 
     @Override
     public void notifyAllObservers(Notification notification) {
-
+        for(Observer observer : observers){
+            observer.update(notification);
+        }
     }
 
     @Override

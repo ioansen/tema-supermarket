@@ -8,6 +8,8 @@ import java.beans.PropertyChangeListener;
  *
  * @see Subject
  */
-public interface Observer extends PropertyChangeListener {
+public interface Observer {
+
+    void update(Notification notification);
 
 }

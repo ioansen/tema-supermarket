@@ -4,6 +4,7 @@ import observe.Subject;
 import visit.Visitable;
 
 import java.util.List;
+import java.util.Set;
 
 public interface Department extends Subject, Visitable {
 
@@ -24,7 +25,7 @@ public interface Department extends Subject, Visitable {
      *
      * @return the list of customers
      */
-    List<Customer> getCustomers();
+    Set<Customer> getCustomers();
 
     /**
     * @return the id of this department
@@ -43,5 +44,5 @@ public interface Department extends Subject, Visitable {
      *
      * @return the list of items
      */
-    List<Item> getItems();
+    Set<Item> getItems();
 }
