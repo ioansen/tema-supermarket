@@ -4,6 +4,8 @@ package model.impl;
 import model.Department;
 import model.Item;
 
+import java.util.Objects;
+
 public class ItemImpl implements Item {
 
     private final long id;
@@ -55,5 +57,18 @@ public class ItemImpl implements Item {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemImpl item = (ItemImpl) o;
+        return Objects.equals(name, item.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

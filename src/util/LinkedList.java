@@ -1,10 +1,8 @@
 package util;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.ListIterator;
+import java.util.*;
 
-public class LinkedList<E> implements Iterable<E>
+public class LinkedList<E> extends AbstractList<E> implements Iterable<E>
 {
     private Node<E> head;
     private Node<E> tail;
@@ -20,7 +18,7 @@ public class LinkedList<E> implements Iterable<E>
     }
 
     public LinkedList(LinkedList<E> original) {
-        nodesNR = original.getNumberOfNodes();
+        nodesNR = original.size();
         head = original.getHead();
         tail = original.getTail();
     }
@@ -116,7 +114,8 @@ public class LinkedList<E> implements Iterable<E>
         return goAtIndex(index);
     }
 
-    public int indexOf(E e){
+    public int indexOf(Object e){
+        e = (E) e;
         Node current  = getHead();
         if ( current == null) return -1;
         int i = 0;
@@ -131,7 +130,7 @@ public class LinkedList<E> implements Iterable<E>
         return indexOf(node.data);
     }
 
-    public boolean contains(E e){
+    public boolean contains(Object e){ ;
         return indexOf(e) > -1;
     }
 
@@ -149,7 +148,7 @@ public class LinkedList<E> implements Iterable<E>
         return current.data;
     }
 
-    public boolean remove(E e){
+    public boolean remove(Object e){
         return remove(indexOf(e)) != null;
     }
 
@@ -157,8 +156,8 @@ public class LinkedList<E> implements Iterable<E>
         return nodesNR == 0;
     }
 
-    public boolean removeAll(Collection<? extends E> c){
-        for(E e: c) remove(e);
+    public boolean removeAll(Collection<?> c){
+        for(Object e: c) remove(e);
         return true;
     }
 
@@ -166,7 +165,7 @@ public class LinkedList<E> implements Iterable<E>
         return new LinkedList<>(this);
     }
 
-    public int getNumberOfNodes() {
+    public int size() {
         return nodesNR;
     }
 
