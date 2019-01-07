@@ -50,7 +50,7 @@ public class CustomerImpl implements Customer {
     }
 
     public void addToCart(Item item){
-        shoppingCart.add(item);
+        shoppingCart.add(Item.copy(item));
         item.getDepartment().addObserver(this);
     }
 }
