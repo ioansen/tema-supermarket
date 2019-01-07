@@ -31,4 +31,11 @@ public interface Item {
      * @return the department this item is currently assigned to
      */
     Department getDepartment();
+
+    /**
+     * Set a new department for this item
+     *
+     * @param department the new department
+     */
+    void setDepartment(Department department);
 }
