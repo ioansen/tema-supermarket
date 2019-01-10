@@ -6,7 +6,7 @@ import visit.Visitable;
 import java.util.List;
 import java.util.Set;
 
-public interface Department extends Subject, Visitable {
+public interface Department extends Subject, Visitable, WithId {
 
     /**
      * A customer bought at lest one product from this department???
@@ -26,11 +26,6 @@ public interface Department extends Subject, Visitable {
      * @return the list of customers
      */
     Set<Customer> getCustomers();
-
-    /**
-    * @return the id of this department
-    */
-    long getId();
 
     /**
      *Adds a new item (aka product) to this department

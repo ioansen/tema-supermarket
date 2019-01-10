@@ -8,30 +8,27 @@ import java.util.Objects;
 
 public class ItemImpl implements Item {
 
-    private final long id;
+    private final int id;
     private final String name;
     private double price;
     private Department department;
 
-    private static int nextItemId = 0;
 
-    {
-        id = nextItemId++;
-    }
-
-    public ItemImpl(String name, double price) {
+    public ItemImpl(String name, int id, double price) {
+        this.id = id;
         this.name = name;
         this.price = price;
     }
 
-    public ItemImpl(String name, double price, Department department) {
+    public ItemImpl(String name, int id, double price, Department department) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.department = department;
     }
 
     @Override
-    public long getId() {
+    public int getId() {
         return id;
     }
 

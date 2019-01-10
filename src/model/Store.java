@@ -1,6 +1,4 @@
-import model.Customer;
-import model.Department;
-import model.ShoppingCart;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +17,20 @@ public class Store {
         departments = new ArrayList<>();
     }
 
+    /*name is silly here cuz it'll only work the first time but w/e*/
+    public static Store getInstance(String name) {
+        if (STORE == null) {
+            STORE = new Store(name);
+        }
+        return STORE;
+    }
+
+    /*this is even more dumb, but w/e*/
     public static Store getInstance() {
         if (STORE == null) {
-            STORE = new Store("SHOP");
+            throw new AssertionError(
+                    "Store wasn't initialized. " +
+                            "Call getInstance(String) to instantiate one");
         }
         return STORE;
     }
@@ -45,6 +54,10 @@ public class Store {
 
     public List<Department> getDepartments(){
         return departments;
+    }
+
+    public  List<Customer> getCustomers(){
+        return getCustomers();
     }
 
     public Department getDepartment(Integer id){

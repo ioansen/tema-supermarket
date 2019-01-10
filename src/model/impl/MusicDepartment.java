@@ -6,6 +6,10 @@ import visit.Visitor;
 
 public class MusicDepartment extends AbstractDepartment {
 
+    public MusicDepartment(int id) {
+        super(id);
+    }
+
     @Override
     public void accept(Visitor v) {
         v.visit(this);

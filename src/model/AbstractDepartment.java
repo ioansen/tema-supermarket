@@ -11,15 +11,14 @@ import java.util.TreeSet;
 
 public abstract class AbstractDepartment implements Department {
 
-    private final long id;
+    private final int id;
     private Set<Customer> customers;
     private Set<Item> items;
     private Set<Observer> observers;
 
-    private static long nextDepId;
 
-    {
-        id = nextDepId++;
+    public AbstractDepartment(int id) {
+        this.id = id;
         customers = new TreeSet<>();
         items = new TreeSet<>();
         observers = new TreeSet<>();
@@ -41,7 +40,7 @@ public abstract class AbstractDepartment implements Department {
     }
 
     @Override
-    public long getId() {
+    public int getId() {
         return id;
     }
 
