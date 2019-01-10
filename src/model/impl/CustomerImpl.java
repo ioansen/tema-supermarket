@@ -30,6 +30,7 @@ public class CustomerImpl implements Customer {
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }
+
     public WishList getWishList() {
         return wishList;
     }
