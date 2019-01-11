@@ -3,9 +3,6 @@ package events;
 import model.Department;
 import model.Item;
 import model.Store;
-import model.impl.ItemImpl;
-import observe.Notification;
-import observe.NotificationType;
 import repositories.ItemRepository;
 
 public class ModifyProductEvent implements Event{

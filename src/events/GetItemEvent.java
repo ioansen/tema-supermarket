@@ -16,16 +16,7 @@ public class GetItemEvent implements Event {
         Customer customer = store.getCustomer(customerName);
         WishList wishList = customer.getWishList();
         Item selectedItem = wishList.executeStrategy();
-        Department department = selectedItem.getDepartment();
-        boolean doNotRemove = false;
-        for ( Item item : wishList){
-            if (item.getDepartment().getId() == department.getId()){
-                doNotRemove = true;
-                break;
-            }
-        }
-
-        if(!doNotRemove) department.removeObserver(customer);
+        customer.removeFromWishList(selectedItem);
         customer.addToCart(selectedItem);
         System.out.println(selectedItem);
     }

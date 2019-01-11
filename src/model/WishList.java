@@ -2,6 +2,8 @@ package model;
 
 import strategy.Strategy;
 
+import java.util.Comparator;
+
 public class WishList extends ItemList {
 
     private Strategy strategy;
@@ -13,7 +15,6 @@ public class WishList extends ItemList {
 
     public Item executeStrategy(){
         Item selectedItem = strategy.execute(this);
-        remove(selectedItem);
         return selectedItem;
     }
 
