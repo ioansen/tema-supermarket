@@ -34,10 +34,17 @@ public interface Department extends Subject, Visitable, WithId {
      */
     void addItem(Item item);
 
+    void removeItem(Item item);
+
+    void modifyItem(Item item);
     /**
      * Returns the list of items (products) currently available in this department
      *
      * @return the list of items
      */
     Set<Item> getItems();
+
+
+    Item getItem(int itemId);
+
 }

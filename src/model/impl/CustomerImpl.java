@@ -43,15 +43,35 @@ public class CustomerImpl implements Customer {
     @Override
     public void update(Notification notification) {
         notifications.add(notification);
+        switch (notification.getType()){
+            case ADD:
+                break;
+            case MODIFY:
+                break;
+            case REMOVE:
+                break;
+        }
     }
 
+    @Override
     public void addToWishList(Item item){
         wishList.add(item);
         item.getDepartment().addObserver(this);
     }
 
+    @Override
     public void addToCart(Item item){
         shoppingCart.add(Item.copy(item));
         item.getDepartment().addObserver(this);
+    }
+
+    @Override
+    public void removeFromWishList(Item item){
+        wishList.remove(item);
+    }
+
+    @Override
+    public void removeFromCart(Item item){
+        shoppingCart.remove(item);
     }
 }

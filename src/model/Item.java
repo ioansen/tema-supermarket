@@ -44,6 +44,6 @@ public interface Item extends WithId {
      * @return the copy of the item
      */
     static Item copy(Item item){
-        return new ItemImpl(item.getName(), item.getPrice(), item.getDepartment());
+        return new ItemImpl(item.getName(), item.getId(), item.getPrice(), item.getDepartment());
     }
 }

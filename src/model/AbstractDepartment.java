@@ -1,6 +1,7 @@
 package model;
 
 import observe.Notification;
+import observe.NotificationType;
 import observe.Observer;
 import visit.Visitor;
 
@@ -48,6 +49,22 @@ public abstract class AbstractDepartment implements Department {
     public void addItem(Item item) {
         items.add(item);
         item.setDepartment(this);
+        notifyAllObservers(Notification.spawn(id, item.getId(), NotificationType.ADD));
+    }
+
+    @Override
+    public void removeItem(Item item) {
+        items.remove(item);
+        item.setDepartment(null);
+        notifyAllObservers(Notification.spawn(id, item.getId(), NotificationType.REMOVE));
+
+    }
+
+    @Override
+    public void modifyItem(Item item) {
+        items.remove(item);
+        items.add(item);
+        notifyAllObservers(Notification.spawn(id, item.getId(), NotificationType.MODIFY));
     }
 
     @Override
@@ -74,4 +91,18 @@ public abstract class AbstractDepartment implements Department {
 
     @Override
     public abstract void accept(Visitor v);
+
+    @Override
+    public Item getItem(int itemId) {
+        for ( Item item : items){
+            if (itemId == item.getId()){
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public Set<Observer> getObservers() {
+        return observers;
+    }
 }

@@ -23,4 +23,8 @@ public interface Customer extends Observer {
 
 
     void addToCart(Item item);
+
+    void removeFromWishList(Item item);
+
+    void removeFromCart(Item item);
 }

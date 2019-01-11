@@ -47,6 +47,14 @@ public class Store {
         return new ShoppingCart(budget);
     }
 
+    public Customer getCustomer(String customerName){
+        for ( Customer customer : customers){
+            if (customerName.equals(customer.getName())){
+                return customer;
+            }
+        }
+        return null;
+    }
 
     public void addDepartment(Department department){
         departments.add(department);

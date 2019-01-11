@@ -1,5 +1,7 @@
 package observe;
 
+import java.util.List;
+
 /**
  * This class represents an observable object.
  * It can be subclassed to represent an object that the application wants to have observed.
@@ -15,5 +17,7 @@ public interface Subject {
     /**
      */
     void notifyAllObservers(Notification notification);
+
+    List<Observer> getObservers();
 
 }
