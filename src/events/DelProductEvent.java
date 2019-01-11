@@ -3,7 +3,6 @@ package events;
 import model.Department;
 import model.Item;
 import model.Store;
-import repositories.ItemRepository;
 
 public class DelProductEvent implements Event {
 
@@ -21,10 +20,7 @@ public class DelProductEvent implements Event {
             item = department.getItem(itemId);
             if ( item != null){
                 department.removeItem(item);
-                ItemRepository.getRepo().delete(item);
             }
-
         }
-
     }
 }

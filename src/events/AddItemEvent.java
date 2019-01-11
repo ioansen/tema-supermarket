@@ -1,8 +1,6 @@
 package events;
 
-import events.Event;
 import model.*;
-import repositories.ItemRepository;
 
 public class AddItemEvent implements Event {
 
@@ -19,7 +17,11 @@ public class AddItemEvent implements Event {
     @Override
     public void fire() {
         Store store = Store.getInstance();
-        Item item = ItemRepository.getRepo().find(itemId);
+        Item item = null;
+        for ( Department department : store.getDepartments()){
+            item = department.getItem(itemId);
+            if ( item != null) break;
+        }
         Customer customer = store.getCustomer(customerName);
         if ( Event.figureOutItemList(list)) {
             customer.addToCart(item);

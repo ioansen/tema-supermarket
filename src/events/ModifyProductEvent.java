@@ -3,7 +3,6 @@ package events;
 import model.Department;
 import model.Item;
 import model.Store;
-import repositories.ItemRepository;
 
 public class ModifyProductEvent implements Event{
 
@@ -24,6 +23,5 @@ public class ModifyProductEvent implements Event{
         Item item = department.getItem(itemId);
         item.setPrice(price);
         department.modifyItem(item);
-        ItemRepository.getRepo().save(item);
     }
 }

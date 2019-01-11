@@ -8,7 +8,6 @@ import model.Department;
 import model.Item;
 import model.Store;
 import model.impl.*;
-import repositories.ItemRepository;
 
 public class StoreReader implements Reader{
 
@@ -39,7 +38,6 @@ public class StoreReader implements Reader{
                             Double.valueOf(lineComp[2]),
                             department);
 
-                    ItemRepository.getRepo().save(item);
                     department.addItem(item);
                 }
                 store.addDepartment(department);

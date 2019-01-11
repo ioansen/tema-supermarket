@@ -2,14 +2,8 @@ package events;
 
 import model.Department;
 import model.Item;
-import model.ItemList;
 import model.Store;
 import model.impl.ItemImpl;
-import observe.Notification;
-import observe.NotificationType;
-import repositories.ItemRepository;
-
-import java.time.LocalDateTime;
 
 public class AddProductEvent implements Event {
 
@@ -31,6 +25,5 @@ public class AddProductEvent implements Event {
         Department department = store.getDepartment(depId);
         Item item = new ItemImpl(name, itemId, price);
         department.addItem(item);
-        ItemRepository.getRepo().save(item);
     }
 }

@@ -1,7 +1,7 @@
 package events;
 
 import model.*;
-import repositories.ItemRepository;
+import model.impl.ItemImpl;
 
 public class DelItemEvent implements Event {
 
@@ -18,10 +18,15 @@ public class DelItemEvent implements Event {
     @Override
     public void fire() {
         Store store = Store.getInstance();
-        Item item = ItemRepository.getRepo().find(itemId);
+        Item item = null;
+        for ( Department department : store.getDepartments()){
+            item = department.getItem(itemId);
+            if ( item != null) break;
+        }
         Customer customer = store.getCustomer(customerName);
         if ( Event.figureOutItemList(list)) {
             customer.removeFromCart(item);
+
         } else {
             customer.removeFromWishList(item);
         }
