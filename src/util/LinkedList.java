@@ -192,7 +192,9 @@ public class LinkedList<E extends Comparable<? super E>>  implements Iterable<E>
             return;
         } else if ( head.data.equals(e)){
             head = head.next;
-            head = null;
+            if ( head != null){
+                head.prev = null;
+            }
             return;
         }
 
@@ -213,8 +215,6 @@ public class LinkedList<E extends Comparable<? super E>>  implements Iterable<E>
         if (current.prev != null) {
             current.prev.next = current.next;
         }
-
-        current = null;
     }
 
     public boolean isEmpty(){
@@ -392,6 +392,7 @@ public class LinkedList<E extends Comparable<? super E>>  implements Iterable<E>
         list.add(66);
 
         print(list);
+        System.out.println(list.getHead());
     }
 
     private static void print(LinkedList<Integer> list){
