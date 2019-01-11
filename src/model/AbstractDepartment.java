@@ -53,15 +53,14 @@ public abstract class AbstractDepartment implements Department {
     @Override
     public void removeItem(Item item) {
         items.remove(item);
-        item.setDepartment(null);
         notifyAllObservers(Notification.spawn(id, item.getId(), NotificationType.REMOVE));
 
     }
 
     @Override
     public void modifyItem(Item item) {
-        items.remove(item);
-        items.add(item);
+        Item mine = getItem(item.getId());
+        mine.setPrice(item.getPrice());
         notifyAllObservers(Notification.spawn(id, item.getId(), NotificationType.MODIFY));
     }
 
