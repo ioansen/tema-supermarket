@@ -5,7 +5,7 @@ import model.impl.ItemImpl;
 /**
  * Represents a unit that can be sold in a department
  */
-public interface Item extends WithId {
+public interface Item extends WithId, Comparable<Item>{
 
 
     /**

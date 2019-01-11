@@ -1,6 +1,7 @@
 package events;
 
 import model.Customer;
+import model.Item;
 import model.Store;
 
 public class GetItemEvent implements Event {
@@ -15,5 +16,7 @@ public class GetItemEvent implements Event {
     public void fire() {
         Store store = Store.getInstance();
         Customer customer = store.getCustomer(customerName);
+        Item selectedItem = customer.getWishList().executeStrategy();
+        customer.addToCart(selectedItem);
     }
 }

@@ -1,6 +1,6 @@
 package observe;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * This class represents an observable object.
@@ -18,6 +18,6 @@ public interface Subject {
      */
     void notifyAllObservers(Notification notification);
 
-    List<Observer> getObservers();
+    Set<Observer> getObservers();
 
 }

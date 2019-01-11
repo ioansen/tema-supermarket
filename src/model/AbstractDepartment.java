@@ -5,10 +5,7 @@ import observe.NotificationType;
 import observe.Observer;
 import visit.Visitor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public abstract class AbstractDepartment implements Department {
 
@@ -20,9 +17,9 @@ public abstract class AbstractDepartment implements Department {
 
     public AbstractDepartment(int id) {
         this.id = id;
-        customers = new TreeSet<>();
-        items = new TreeSet<>();
-        observers = new TreeSet<>();
+        customers = new HashSet<>();
+        items = new HashSet<>();
+        observers = new HashSet<>();
     }
 
     @Override

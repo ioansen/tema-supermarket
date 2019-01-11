@@ -46,7 +46,7 @@ public class EventReader implements Reader {
                 return new AcceptEvent(Integer.valueOf(lineComp[1]), lineComp[2]);
             case "getObservers":
                 return new GetObserversEvent(Integer.valueOf(lineComp[1]));
-            case "getNotification":
+            case "getNotifications":
                 return new GetNotificationsEvent(lineComp[1]);
             case "modifyProduct":
                 return new ModifyProductEvent(Integer.valueOf(lineComp[1]),

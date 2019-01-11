@@ -16,10 +16,15 @@ public class DelProductEvent implements Event {
     @Override
     public void fire() {
         Store store = Store.getInstance();
-        Item item = ItemRepository.getRepo().find(itemId);
+        Item item;
         for (Department department : store.getDepartments()){
-            department.removeItem(item);
-            ItemRepository.getRepo().delete(item);
+            item = department.getItem(itemId);
+            if ( item != null){
+                department.removeItem(item);
+                ItemRepository.getRepo().delete(item);
+            }
+
         }
+
     }
 }

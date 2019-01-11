@@ -5,6 +5,7 @@ import model.Item;
 import model.ShoppingCart;
 import model.WishList;
 import observe.Notification;
+import strategy.Strategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,11 @@ public class CustomerImpl implements Customer {
     private final WishList wishList;
     private final List<Notification> notifications;
 
-    public CustomerImpl(String name, double budget) {
+    public CustomerImpl(String name, double budget, Strategy strategy) {
         this.name = name;
         notifications = new ArrayList<>();
         shoppingCart = new ShoppingCart(budget);
-        wishList = new WishList();
+        wishList = new WishList(strategy);
     }
 
     public String getName() {
@@ -73,5 +74,10 @@ public class CustomerImpl implements Customer {
     @Override
     public void removeFromCart(Item item){
         shoppingCart.remove(item);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

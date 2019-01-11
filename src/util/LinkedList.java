@@ -2,7 +2,7 @@ package util;
 
 import java.util.*;
 
-public class LinkedList<E> extends AbstractList<E> implements Iterable<E>
+public class LinkedList<E>  implements Iterable<E>
 {
     private Node<E> head;
     private Node<E> tail;
@@ -19,8 +19,8 @@ public class LinkedList<E> extends AbstractList<E> implements Iterable<E>
 
     public LinkedList(LinkedList<E> original) {
         nodesNR = original.size();
-        head = original.getHead();
-        tail = original.getTail();
+        head = original.getHeadNode();
+        tail = original.getTailNode();
     }
 
 
@@ -116,7 +116,7 @@ public class LinkedList<E> extends AbstractList<E> implements Iterable<E>
 
     public int indexOf(Object e){
         e = (E) e;
-        Node current  = getHead();
+        Node current  = getHeadNode();
         if ( current == null) return -1;
         int i = 0;
         for ( ; !current.data.equals(e) && i < nodesNR; i++) current = current.next;
@@ -169,26 +169,34 @@ public class LinkedList<E> extends AbstractList<E> implements Iterable<E>
         return nodesNR;
     }
 
-    protected Node<E> getHead() {
+    private Node<E> getHeadNode() {
         return head;
     }
 
-    public Node<E> getTail() {
+    private Node<E> getTailNode() {
         return tail;
+    }
+
+    public E getHead(){
+        return head.data;
+    }
+    public E getTail(){
+        return tail.data;
     }
 
     public String toString()
     {
-        return nodesNR + " nodes in list:\n\n" + head;
+        /*return nodesNR + " nodes in list:\n" + head + "\n";*/
+        return "["+head+"]";
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new ListIteratorImpl(getHead());
+        return new ListIteratorImpl(getHeadNode());
     }
 
     public ListIterator<E> listIterator(){
-        return new ListIteratorImpl(getHead());
+        return new ListIteratorImpl(getHeadNode());
     }
 
     public ListIterator<E> listIterator(int index){
@@ -214,7 +222,9 @@ public class LinkedList<E> extends AbstractList<E> implements Iterable<E>
         }
 
         public String toString() {
-            return data + "  --> " + next;
+            if (next == null)
+                return data.toString();
+            return data + ", " + next;
         }
     }
 

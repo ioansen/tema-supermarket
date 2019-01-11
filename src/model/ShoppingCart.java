@@ -25,10 +25,9 @@ public class ShoppingCart extends ItemList implements Visitor {
     public ShoppingCart(double budget) {
         this.budget = budget;
         current = 0;
-        this.sort(new ItemComparator());
+//        this.sort(new ItemComparator());
     }
 
-    @Override
     public boolean add(Item item) {
         if ( current + item.getPrice() < budget) {
             super.add(item);

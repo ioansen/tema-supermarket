@@ -68,4 +68,15 @@ public class ItemImpl implements Item {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    @Override
+    public int compareTo(Item o) {
+        int price = Double.compare(getPrice(), o.getPrice());
+        return price != 0 ? price : getName().compareTo(o.getName());
+    }
+
+    @Override
+    public String toString() {
+        return name + ";" + id + ";" + price;
+    }
 }

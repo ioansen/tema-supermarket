@@ -35,4 +35,9 @@ public class Notification {
     public NotificationType getType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return type.getLabel() + ";" + itemId + ";" + departmentId;
+    }
 }

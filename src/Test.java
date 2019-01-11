@@ -15,12 +15,20 @@ public class Test {
         StoreReader storeReader = new StoreReader();
         CustomersReader customersReader = new CustomersReader();
         EventReader eventReader = new EventReader();
-        for ( File file : tests ){
+       /* for ( File file : tests ){
             String path = file.getAbsolutePath();
             storeReader.read(path + "\\store.txt");
             customersReader.read(path + "\\customers.txt");
             eventReader.read(path  + "\\events.txt");
-        }
+        }*/
+       for (int i = 0; i < 1; i ++){
+           System.out.println("Running test " + tests[i].getName());
+           File file = tests[i];
+           String path = file.getAbsolutePath();
+           storeReader.read(path + "\\store.txt");
+           customersReader.read(path + "\\customers.txt");
+           eventReader.read(path  + "\\events.txt");
+       }
 
     }
 }
