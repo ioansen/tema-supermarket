@@ -2,27 +2,36 @@ package util;
 
 import java.util.*;
 
-public class LinkedList<E>  implements Iterable<E>
+public class LinkedList<E extends Comparable<? super E>>  implements Iterable<E>
 {
     private Node<E> head;
     private Node<E> tail;
     private int nodesNR;
+    private Comparator<? super E> comparator;
 
     public LinkedList() {
     }
 
-    /** constructor that creates list based on given objects
-     can be empty*/
-    public LinkedList(E... elements) {
-        add(elements);
+    public LinkedList(Comparator<? super E> comparator) {
+        this.comparator = comparator;
     }
+
 
     public LinkedList(LinkedList<E> original) {
         nodesNR = original.size();
         head = original.getHeadNode();
         tail = original.getTailNode();
+        comparator = original.comparator();
     }
 
+
+    public Comparator<? super E> comparator() {
+        return comparator;
+    }
+
+    public void  setComparator(Comparator<? super E> comparator) {
+        this.comparator = comparator;
+    }
 
     private Node<E> goAtIndex(int index) throws IndexOutOfBoundsException
     {
@@ -36,42 +45,97 @@ public class LinkedList<E>  implements Iterable<E>
         return current;
     }
 
-    /** adds elements at the end of the list
-     even if the list is empty*/
-    public boolean add(E... elements)
-    {
-        if (elements.length == 0) return false;
 
-        int i = 0;
+    public void add(E e){
 
         /*in case list is empty initialize it*/
         if (head == null)
         {
-            head = new Node<E>(elements[0]);
+            head = new Node<E>(e);
             tail = head;
             nodesNR = 1;
-            i++;
+            return;
         }
 
-        for ( ; i < elements.length; i++)
-        {
-            Node<E> aux = tail;
-            tail.next = new Node<>(elements[i]);
+        Node<E> current = head;
+
+        if ( comparator != null){
+
+            while (current!= null) {
+                if (comparator.compare(current.data, e) > 0) {
+                    break;
+                }
+
+                current = current.next;
+            }
+
+        }
+        else {
+            while (current != null) {
+                if (current.data.compareTo(e) > 0) {
+                    break;
+                }
+                current = current.next;
+
+            }
+        }
+
+        //caught in mid
+        if ( current != head && current !=null) {
+            current = current.prev;
+            addAfter(e, current);
+
+        } else if( current == null){
+            //caught last,
+            addAfter(e, tail);
             tail = tail.next;
-            tail.prev = aux;
-            nodesNR++;
+        } else if (current == head){
+            //caught first
+            if ( comparator != null){
+
+                    if (comparator.compare(current.data, e) > 0) {
+                        addHead(e);
+                    } else {
+                       addAfter(e,head);
+                }
+
+            }
+            else {
+                    if (current.data.compareTo(e) > 0) {
+                        addHead(e);
+                    } else {
+
+                        addAfter(e,head);
+
+                    }
+            }
         }
 
-        return true;
+
+
     }
 
-    @SuppressWarnings("unchecked")
-    public boolean addAll(Collection<? extends E> c){
-        add(c.toArray((E[]) new Object[c.size()]));
-        return true;
+    private void addAfter(E e, Node<E> after){
+        Node<E> aux = new Node<>(e);
+
+        aux.next = after.next;
+        after.next = aux;
+        aux.prev = after;
+
+        if ( aux.next != null){
+            aux.next.prev = aux;
+        }
+        nodesNR++;
+
     }
 
-    public void addHead(E e){
+    public void addAll(Collection<? extends E> c){
+        for ( E e : c){
+            add(e);
+        }
+    }
+
+    private void addHead(E e){
         Node<E> newHead = new Node<>(e);
         newHead.next = head;
         if ( head != null)
@@ -81,32 +145,7 @@ public class LinkedList<E>  implements Iterable<E>
 
     }
 
-    /**adds elements starting from index
-     if index > number of nodes in the list, this method does nothing
-     also cant add into an empty list*/
-    public void addAtIndex(int index, E... elements)
-    {
-        if (elements.length == 0) return;
-        if (index >= nodesNR) return; //this applies also when the list is empty
-
-        Node current = goAtIndex(index);
-
-        /*save the next el to re-link later*/
-        Node temp = current.next;
-
-        /*insert the new objects*/
-        for ( int i = 0; i < elements.length; i++)
-        {
-            current.next = new Node<E>(elements[i]);
-            current = current.next;
-            nodesNR++;
-        }
-
-        /*re-link*/
-        current.next = temp;
-    }
-
-    public E get(int index){
+   /* public E get(int index){
         return goAtIndex(index).data;
     }
 
@@ -136,7 +175,7 @@ public class LinkedList<E>  implements Iterable<E>
 
     public boolean contains(Node<E> node){
         return indexOf(node) > -1;
-    }
+    }*/
 
     public E remove(int index){
         Node<E> current = goAtIndex(index);
@@ -148,16 +187,42 @@ public class LinkedList<E>  implements Iterable<E>
         return current.data;
     }
 
-    public boolean remove(Object e){
-        return remove(indexOf(e)) != null;
+    public void remove(E e){
+        if ( head == null){
+            return;
+        } else if ( head.data.equals(e)){
+            head = head.next;
+            head = null;
+            return;
+        }
+
+        Node<E> current = head;
+
+        while(!current.data.equals(e)){
+            current = current.next;
+        }
+
+        // Change next only if node to be deleted
+        // is NOT the last node
+        if ( current.next != null){
+            current.next.prev = current.prev;
+        }
+
+        // Change prev only if node to be deleted
+        // is NOT the first node
+        if (current.prev != null) {
+            current.prev.next = current.next;
+        }
+
+        current = null;
     }
 
     public boolean isEmpty(){
         return nodesNR == 0;
     }
 
-    public boolean removeAll(Collection<?> c){
-        for(Object e: c) remove(e);
+    public boolean removeAll(Collection<E> c){
+        for(E e : c) remove(e);
         return true;
     }
 
@@ -296,53 +361,42 @@ public class LinkedList<E>  implements Iterable<E>
 
     public static void main(String[] args) {
         LinkedList<Integer> list = new LinkedList<>();
-        list.addHead(6);
         list.add(10);
+        print(list);
+        list.add(9);
+        print(list);
         list.add(20);
-        list.addHead(5);
+        print(list);
         list.add(22);
+        print(list);
         list.add(25);
+        print(list);
+        list.add(15);
+        print(list);
         list.add(30);
+        print(list);
+        list.add(3);
+        print(list);
+        list.add(7);
+        print(list);
         list.add(30);
-        list.add(30);
-        list.add(30);
-        list.add(30);
+        print(list);
         list.add(35);
-        list.addHead(3);
-        System.out.println(list.getHead());
+        print(list);
+        list.add(78);
+        list.add(78);
+        list.add(66);
 
-        int last = 0;
-        System.out.println("Afisare 1");
-        for (Integer i : list) {
-            System.out.print(i + ", ");
-            if (i < last) {
-                System.err.println("LinkedList a fost implementata gresit.");
-            }
-            last = i;
-        }
-        System.out.println();
+        print(list);
+    }
 
-        System.out.println("Afisare 2");
+    private static void print(LinkedList<Integer> list){
         ListIterator<Integer> itr = (ListIterator<Integer>) list.iterator();
         while (itr.hasNext()) {
-            System.out.print(itr.nextIndex() + ": " + itr.next() + ", ");
-        }
-
-        System.out.println();
-        System.out.println("Afisare 3");
-        while (itr.hasPrevious()) {
-            System.out.print(itr.previousIndex() + ": " + itr.previous() + ", ");
-        }
-
-        System.out.println();
-        System.out.println("Afisare 4");
-        while (itr.hasNext()) {
-            System.out.print(itr.nextIndex() + ": " + itr.next() + ", ");
+            System.out.print( itr.next() + ", ");
         }
         System.out.println();
 
-        list.remove(Integer.valueOf(30));
-        System.out.println(list);
     }
 }
 
