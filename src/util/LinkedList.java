@@ -252,6 +252,7 @@ public class LinkedList<E extends Comparable<? super E>>  implements Iterable<E>
     public String toString()
     {
         /*return nodesNR + " nodes in list:\n" + head + "\n";*/
+        if ( head == null) return "[]";
         return "["+head+"]";
     }
 
@@ -300,9 +301,12 @@ public class LinkedList<E extends Comparable<? super E>>  implements Iterable<E>
 
         ListIteratorImpl(Node<E> head){
             inBetween = new Node<>(null);
-            head.prev = inBetween;
-            inBetween.next = head;
-            index = -1;
+            if ( head != null){
+                head.prev = inBetween;
+                inBetween.next = head;
+                index = -1;
+            }
+
         }
 
         @Override
