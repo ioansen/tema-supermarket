@@ -25,7 +25,7 @@ public interface Department extends Subject, Visitable, WithId {
      *
      * @return the list of customers
      */
-    Set<Customer> getCustomers();
+    List<Customer> getCustomers();
 
     /**
      *Adds a new item (aka product) to this department
@@ -42,7 +42,7 @@ public interface Department extends Subject, Visitable, WithId {
      *
      * @return the list of items
      */
-    Set<Item> getItems();
+    List<Item> getItems();
 
 
     Item getItem(int itemId);

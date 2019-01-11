@@ -1,9 +1,6 @@
 package model.impl;
 
-import model.Customer;
-import model.Item;
-import model.ShoppingCart;
-import model.WishList;
+import model.*;
 import observe.Notification;
 import strategy.Strategy;
 
@@ -63,12 +60,22 @@ public class CustomerImpl implements Customer {
     @Override
     public void addToCart(Item item){
         shoppingCart.add(Item.copy(item));
-        item.getDepartment().addObserver(this);
+        //item.getDepartment().addObserver(this);
     }
 
     @Override
     public void removeFromWishList(Item item){
         wishList.remove(item);
+        Department department = item.getDepartment();
+        boolean doNotRemove = false;
+        for ( Item i : wishList){
+            if (department.getId() == i.getDepartment().getId()){
+                doNotRemove = true;
+                break;
+            }
+        }
+
+        if(!doNotRemove) department.removeObserver(this);
     }
 
     @Override

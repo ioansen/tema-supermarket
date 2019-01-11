@@ -1,5 +1,6 @@
 package observe;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,6 +19,6 @@ public interface Subject {
      */
     void notifyAllObservers(Notification notification);
 
-    Set<Observer> getObservers();
+    List<Observer> getObservers();
 
 }

@@ -27,7 +27,6 @@ public class ModifyProductEvent implements Event{
         Item item = department.getItem(itemId);
         item.setPrice(price);
         department.modifyItem(item);
-        department.notifyAllObservers(Notification.spawn(depId, itemId, NotificationType.MODIFY));
         ItemRepository.getRepo().save(item);
     }
 }

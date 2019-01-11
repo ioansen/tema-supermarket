@@ -23,6 +23,7 @@ public class ShoppingCart extends ItemList implements Visitor {
 
     public ShoppingCart(double budget) {
         this.budget = budget;
+        setComparator(new ItemComparator());
     }
 
     public void add(Item item) {

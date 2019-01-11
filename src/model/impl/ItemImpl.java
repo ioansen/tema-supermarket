@@ -71,8 +71,9 @@ public class ItemImpl implements Item {
 
     @Override
     public int compareTo(Item o) {
-        int price = Double.compare(getPrice(), o.getPrice());
-        return price != 0 ? price : getName().compareTo(o.getName());
+        /*int price = Double.compare(getPrice(), o.getPrice());
+        return price != 0 ? price : getName().compareTo(o.getName());*/
+        return getName().compareTo(o.getName());
     }
 
     @Override

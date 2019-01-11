@@ -10,21 +10,22 @@ import java.util.*;
 public abstract class AbstractDepartment implements Department {
 
     private final int id;
-    private Set<Customer> customers;
-    private Set<Item> items;
-    private Set<Observer> observers;
+    private List<Customer> customers;
+    private List<Item> items;
+    private List<Observer> observers;
 
 
     public AbstractDepartment(int id) {
         this.id = id;
-        customers = new HashSet<>();
-        items = new HashSet<>();
-        observers = new HashSet<>();
+        customers = new ArrayList<>();
+        items = new ArrayList<>();
+        observers = new ArrayList<>();
     }
 
     @Override
     public void enter(Customer customer) {
-        customers.add(customer);
+        if ( !customers.contains(customer))
+            customers.add(customer);
     }
 
     @Override
@@ -33,7 +34,7 @@ public abstract class AbstractDepartment implements Department {
     }
 
     @Override
-    public Set<Customer> getCustomers() {
+    public List<Customer> getCustomers() {
         return customers;
     }
 
@@ -65,13 +66,14 @@ public abstract class AbstractDepartment implements Department {
     }
 
     @Override
-    public Set<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
     @Override
     public void addObserver(Observer observer) {
-        observers.add(observer);
+        if ( !observers.contains(observer))
+            observers.add(observer);
     }
 
     @Override
@@ -99,7 +101,7 @@ public abstract class AbstractDepartment implements Department {
         return null;
     }
 
-    public Set<Observer> getObservers() {
+    public List<Observer> getObservers() {
         return observers;
     }
 }
