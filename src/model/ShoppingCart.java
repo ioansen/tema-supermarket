@@ -11,7 +11,6 @@ import java.util.Comparator;
 public class ShoppingCart extends ItemList implements Visitor {
 
     private double budget;
-    private double current;
 
     private class ItemComparator implements Comparator<Item> {
         @Override
@@ -24,16 +23,13 @@ public class ShoppingCart extends ItemList implements Visitor {
 
     public ShoppingCart(double budget) {
         this.budget = budget;
-        current = 0;
-//        this.sort(new ItemComparator());
     }
 
-    public boolean add(Item item) {
-        if ( current + item.getPrice() < budget) {
+    public void add(Item item) {
+        if ( budget - item.getPrice() > 0) {
             super.add(item);
-            current += item.getPrice();
+            budget -= item.getPrice();
         }
-        return false;
     }
 
     public double getBudget() {
@@ -44,14 +40,10 @@ public class ShoppingCart extends ItemList implements Visitor {
         this.budget = budget;
     }
 
-    public double getCurrent() {
-        return current;
-    }
-
     private void updatePrice(Item item, double proc){
-        current -= item.getPrice();
+        budget += item.getPrice(); //add full price
         item.setPrice(item.getPrice() * proc);
-        current += item.getPrice();
+        budget -= item.getPrice(); //subtract reduced price
 
     }
 
@@ -82,7 +74,14 @@ public class ShoppingCart extends ItemList implements Visitor {
         for ( Item item : this){
             if ( item.getDepartment().equals(videoDepartment)){
                 totalValue += item.getPrice();
-                updatePrice(item, 0.85);
+
+            }
+        }
+        if ( totalValue > videoDepartment.getTheMostExpensive().getPrice()){
+            for ( Item item : this){
+                if ( item.getDepartment().equals(videoDepartment)){
+                    updatePrice(item, 0.85);
+                }
             }
         }
         budget += totalValue / 5;
@@ -90,9 +89,11 @@ public class ShoppingCart extends ItemList implements Visitor {
 
     @Override
     public void visit(SoftwareDepartment softwareDepartment) {
-        for ( Item item : this){
-            if ( item.getDepartment().equals(softwareDepartment)){
-                updatePrice(item, 0.8);
+        if (  budget < softwareDepartment.getCheapestItem().getPrice()) {
+            for (Item item : this) {
+                if (item.getDepartment().equals(softwareDepartment)) {
+                    updatePrice(item, 0.8);
+                }
             }
         }
     }
